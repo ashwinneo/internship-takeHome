@@ -1,0 +1,150 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+<body ng-app="myApp" class="ng-scope" style="background-image: url('./images/ai.jpg');height: 100%; background-position: center; background-size: cover;">
+    <div ng-controller="MyCtrl">
+        <div class="container-fluid mb-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-4">Display How You Want!!!</h1>
+                            <p class="lead"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label class="input-text">Width</label>
+                    <input type="number" class="form-control input-width" placeholder="Enter width..." id="width" name="width" ng-model="width" ng-change="setWidth(width)">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label class="input-text">Height</label>
+                    <input type="number" class="form-control input-width" placeholder="Enter height..." id="height" name="height" ng-model="height" ng-change="setHeight(height)">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label class="input-text">Name</label>
+                    <input type="text" class="form-control input-width" placeholder="Enter name..." id="name" name="name" ng-model="name" ng-change="setName(name)">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label  class="input-text">Image</label>
+                    <input type='file' class="form-control input-width" onchange="angular.element(this).scope().imageUpload(event)" multiple />
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <div id="carouselExampleControls" class="carousel" style="width: 85%">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" data-ng-repeat="step in stepsModel" data-ng-class="{active : $first}">
+                                <img data-ng-src="{{step}}" style="margin-left: 400px;" width="{{width}}" height="{{height}}" alt="carousel {{$index}}" />
+                            </div>
+                        </div>
+                        <a ng-if="stepsModel.length >0" class="carousel-control-prev" href="#carouselExampleControls" role="button" style="background-color: black" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a ng-if="stepsModel.length >0" class="carousel-control-next" href="#carouselExampleControls" style="background-color: black"  role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-3">
+                   <div class="text-center"> <button class="btn btn-primary form-control" ng-disabled="!name || !width || !height || !stepsModel.length>0" ng-click="submitImage()">SUBMIT</button></div>
+                </div>
+            </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+var myApp = angular.module('myApp',[]);
+
+myApp.controller('MyCtrl', function($scope, $http) {
+    $scope.stepsModel = [];
+    $scope.width = "";
+    $scope.height = "";
+
+    $scope.setWidth = function(width) {
+        console.log(width);
+        $scope.width = width;
+    }
+
+    $scope.setHeight = function(height) {
+        console.log(height);
+        $scope.height = height;
+    }
+
+    $scope.setName = function(name) {
+        $scope.name = name;
+    }
+
+    $scope.imageUpload = function(event){
+         var files = event.target.files; //FileList object
+         $scope.fileName = [];
+         for (var i = 0; i < files.length; i++) {
+             var file = files[i];
+             console.log(file);
+             $scope.fileName.push(file.name);
+                 var reader = new FileReader();
+                 reader.onload = $scope.imageIsLoaded; 
+                 reader.readAsDataURL(file);
+         }
+    }
+
+    $scope.imageIsLoaded = function(e){
+        $scope.$apply(function() {
+            $scope.stepsModel.push(e.target.result);
+        });
+        console.log($scope.fileName);
+    }
+
+    $scope.submitImage = function() {
+        var myObj = {
+            "file_name": "ashwin.jpg",
+            "annotation_name": $scope.name
+        }
+        $http.post("http://localhost:8081/createImage")
+        .then(function(response) {
+            console.log(response);
+            
+        });
+        $http({
+            url: 'http://localhost:8081/createImage',
+            method: "POST",
+            data: JSON.stringify(myObj)
+        })
+        .then(function(response) {
+            // success
+            $scope.width = "";
+            $scope.height = "";
+            $scope.name = "";
+            $scope.stepsModel = [];
+            console.log(response);
+        });
+    }
+});
+
+</script>
+</html>
