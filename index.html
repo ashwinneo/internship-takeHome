@@ -45,7 +45,7 @@
                 <div class="col-sm-8 offset-sm-4">
                     <div ng-repeat="data in images">
                         <label class="input-text">{{annotation}}{{ $index + 1 }}</label>
-                        <input type="text" class="form-control input-width" placeholder="Enter name..." id="image{{data.id}}" name="name" ng-model="name[data.count]">
+                        <input type="text" class="form-control input-width" placeholder="Enter name..." id="image{{data.id}}" name="name">
                     </div>
                 </div>
             </div>
@@ -128,6 +128,7 @@
                 $scope.images.push(obj);
             });
             $scope.count = $scope.count + 1;
+            console.log($scope.images);
         }
 
         $scope.submitImage = function () { //Post Request to the DB
@@ -138,6 +139,7 @@
                 }
                 $scope.request.push(obj);
             }
+            console.log($scope.request);
             $http({
                 url: 'http://localhost:8081/createImage',
                 method: "POST",
@@ -145,12 +147,13 @@
             })
                 .then(function (response) {
                     // success
-                    location.reload();
-                    $scope.width = "";
-                    $scope.height = "";
-                    $scope.name = "";
-                    $scope.images = [];
+                   
                 });
+                location.reload();
+                $scope.width = "";
+                $scope.height = "";
+                $scope.name = "";
+                $scope.images = [];
         }
     });
 </script>

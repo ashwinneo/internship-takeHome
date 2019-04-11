@@ -22,6 +22,7 @@ app.get('/getUsers', (request, response) => {
 })
 
 app.post('/createImage', (req, res) => {
+  console.log(req.body.length);
   for (var i = 0; i < req.body.length; i++) {
     if (!req.body[i].fileName) {
       return res.status(200).send({
@@ -39,12 +40,10 @@ app.post('/createImage', (req, res) => {
       var inputData = [file_name, annotation_name];
       db.run(`INSERT INTO USERS(file_name,annotation_name) VALUES(?,?)`, inputData, function (err, rows) {
         if (err) {
-          return console.log(err.message);
+          console.log(err.message);
         }
       });
-      res.status(200).send({
-        success: "Image uploaded succesfully"
-      })
+      res.end('Success')
     }
   }
 });
