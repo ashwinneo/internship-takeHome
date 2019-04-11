@@ -1,13 +1,3 @@
-.thumb{
-    width:100px;
-    margin:5px;
-    float:left;
-}
-
-.uploader{
-    clear:both;
-}
-
 .bg-img{
     height: 100%;
     background-position: center;
@@ -23,4 +13,25 @@
     color: white;
     font-weight: bold;
     font-size: 24px;
+}
+
+canvas {
+    cursor: crosshair;
+    border: 1px solid #000000;
+}
+
+html, body {
+    max-width: 100%;
+    max-height: 100vh;
+    height: auto;
+}
+
+.img-name{
+    text-transform: capitalize;
+    color: white;
+    font-weight: bold;
+}
+
+.btn.disabled, .btn:disabled {
+    cursor: not-allowed;
 }
