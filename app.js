@@ -14,7 +14,7 @@ let db = new sqlite3.Database('./db/DB.sqlite', sqlite3.OPEN_READWRITE, (err) =>
   console.log('Connected to the MY database.');
 });
 
-app.get('/getUsers', (request, response) => {
+app.get('/getImages', (request, response) => {
   db.all("SELECT * FROM USERS", function (err, rows, fields) {
     response.setHeader('Content-Type', 'application/json')
     response.status(200).send(JSON.stringify(rows));
@@ -22,19 +22,7 @@ app.get('/getUsers', (request, response) => {
 })
 
 app.post('/createImage', (req, res) => {
-  console.log(req.body.length);
   for (var i = 0; i < req.body.length; i++) {
-    if (!req.body[i].fileName) {
-      return res.status(200).send({
-        errorId: 1100,
-        message: "File name cannot be empty"
-      })
-    } else if (!req.body[i].annotation_text) {
-      return res.status(200).send({
-        errorId: 1100,
-        message: "Annotation name cannot be empty"
-      })
-    } else {
       const file_name = req.body[i].fileName;
       const annotation_name = req.body[i].annotation_text;
       var inputData = [file_name, annotation_name];
@@ -43,9 +31,11 @@ app.post('/createImage', (req, res) => {
           console.log(err.message);
         }
       });
-      res.end('Success')
-    }
   }
+
+  res.json({
+    success: 'Success',
+  })
 });
 
 const PORT = 8081;
