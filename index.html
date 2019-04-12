@@ -1,5 +1,5 @@
 <html>
-<title>Algoface</title>
+<title>Image Annotation Tool</title>
 
 <head>
     <script src="./js/angular.min.js"></script>
@@ -45,13 +45,14 @@
                                         name="height"></div>
                                 <div class="offset-md-5 mt-3"><label class="input-text">{{annotation}} {{$index + 1}}</label><input
                                         type="text" class="form-control input-width" placeholder="Enter name {{image.id + 1}}"
-                                        onkeyup="setText(event)" id="image{{image.id}}" name="name"></div>
+                                        ng-keyup="setText()" id="image{{image.id}}" name="name"></div>
                             </div>
                         </div>
                         <a ng-if="images.length >1" class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
-                        </a>Í                        <a ng-if="images.length >1" class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        </a>                       
+                         <a ng-if="images.length >1" class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>

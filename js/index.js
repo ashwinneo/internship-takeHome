@@ -13,6 +13,7 @@ myApp.controller('MyCtrl', function ($scope, $http) {
     $scope.count = 0;
     $scope.request = []; //Request for the DB
     $scope.index = 0;
+    $scope.isDisabled = true;
 
     $scope.imageUpload = function (event) { //Image Upload
         $scope.count = 0;
@@ -39,6 +40,24 @@ myApp.controller('MyCtrl', function ($scope, $http) {
             }
             $scope.images.push(obj);
         });
+
+         /**
+         * Canvas to draw on the image
+         * Todo
+         */
+        //var canvas = document.getElementById('canvas');
+        //console.log(canvas)
+        // var ctx = canvas.getContext('2d');
+        // var rect = {};
+        // var drag = false;
+        // var imageObj = null;
+        // imageObj = new Image();
+        // imageObj.onload = function () { ctx.drawImage(imageObj, 0, 0); };
+        // imageObj.src = 'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg';
+        // canvas.addEventListener('mousedown', mouseDown, false);
+        // canvas.addEventListener('mouseup', mouseUp, false);
+        // canvas.addEventListener('mousemove', mouseMove, false);
+
         $scope.count = $scope.count + 1;
     }
 
@@ -66,6 +85,23 @@ myApp.controller('MyCtrl', function ($scope, $http) {
             });
     }
 
+    $scope.setText = function(){
+        $scope.flag = true;
+        for(var i=0; i< $scope.images.length; i++) {
+            var a = document.getElementById('image' + i).value;
+            if(a == null || a == "") {
+                $scope.flag = true;
+            } else {
+                $scope.flag = false;
+            }
+        }
+        if($scope.flag == false) {
+            document.getElementById('isDisabled').disabled = false;
+        } else {
+            document.getElementById('isDisabled').disabled = true;
+        }
+
+    }
     /**
      * Canvas to draw on the image
      * Todo
